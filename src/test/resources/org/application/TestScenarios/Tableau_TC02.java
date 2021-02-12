@@ -56,7 +56,7 @@ public class Tableau_TC02{
     }
 
 
-    public static void main(String[] args) {
+    public static void execute(String[] args) {
         // Sets the username, password, and content URL, which are all required
         // in the payload of a Sign In request
     	String username = s_properties.getProperty("user.admin.name");

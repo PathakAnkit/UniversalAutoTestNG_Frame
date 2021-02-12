@@ -1,6 +1,7 @@
 package org.application.base;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.application.genericUtil.Screenshot_Builder;
 import org.application.listeners.CustomListeners;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -100,11 +102,13 @@ public class BasePageTest extends SetBrowserConfiguration {
 	public void initApplication(@Optional("chrome") String  browser){
 		
 		log.info("Browser: "+browser);
-//		setBrowser(browser);
+//		SetBrowserConfiguration.setBrowser(browser);
+		ChromeOptions options = new ChromeOptions();
+		HashMap<String, Object> chromePref = new HashMap<>();
+		chromePref.put("download.default_directory", (System.getProperty("user.dir") + "\\src\\test\\resources\\DataExcel\\"));
+		options.setExperimentalOption("prefs", chromePref);
 		System.setProperty(CHROME_KEY,DRIVER_PATH+CHROME_FILE);
-		driver  = new ChromeDriver();
-//		System.setProperty(GECKO_KEY,DRIVER_PATH+GECKO_FILE);
-//		driver  = new FirefoxDriver();
+		driver  = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		driver.get(url);
 		log.info("TimeOut:"+timeout);
